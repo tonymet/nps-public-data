@@ -45,5 +45,10 @@ See [Google's Docs for Accessing Public Data](https://cloud.google.com/bigquery/
 * Currently data is refreshed monthly
 * We are working to update tables with frequent changes weekly and later in real-time
 
+## Next Steps
+* Add coverage checks
+* Improve realtime updates
+* Work with NPS to make the dataset official. 
+
 ## Feedback & Issues
 Please share your use-cases & issues using [Github Issues](https://github.com/tonymet/nps-public-data/issues) 
