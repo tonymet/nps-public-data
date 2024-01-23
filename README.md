@@ -1,5 +1,5 @@
 # nps-public-data
-Make US National Park Service (NPS) API data more accessible.  Query Park Info, Activities, Events, Multimedia, places &amp; more
+Make [US National Park Service (NPS) API](https://www.nps.gov/subjects/developer/api-documentation.htm) data more accessible.  Query Park Info, Activities, Events, Multimedia, places &amp; more
 
 ## Demo
 <img width="867" alt="image" src="https://github.com/tonymet/nps-public-data/assets/397995/e46ca93f-134b-4eac-8387-65ac79fa9c2e">
