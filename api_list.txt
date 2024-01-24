@@ -1,0 +1,173 @@
+activities
+Retrieve categories of activities (astronomy, hiking, wildlife watching, etc.) possible in national parks.
+
+GET
+/activities
+
+activities/parks
+Retrieve national parks that are related to particular categories of activity (astronomy, hiking, wildlife watching, etc.).
+
+GET
+/activities/parks
+
+alerts
+Retrieve alerts (danger, closure, caution, and information) posted by parks.
+
+GET
+/alerts
+
+amenities
+Retrieve the amenity types (accessible restrooms, fire pit, picnic area, etc.) available in national parks.
+
+GET
+/amenities
+
+amenities/parksplaces
+Retrieve "places" within national parks that have different amenities. (For more about "place" assets, see below.)
+
+GET
+/amenities/parksplaces
+
+amenities/parksvisitorcenters
+Retrieve visitor centers within national parks that have different amenities.
+
+GET
+/amenities/parksvisitorcenters
+
+articles
+Retrieve articles created by national parks and other NPS entities. (See "people" and "places" below for other specific article types.)
+
+GET
+/articles
+
+campgrounds
+Retrieve data about National Park Service campgrounds including addresses, contacts, description, hours of operation, etc.
+
+GET
+/campgrounds
+
+events
+Retrieve events created by national parks and other NPS entities.
+
+GET
+/events
+
+feespasses
+Retrieve fees and passes information created by national parks and other NPS entities.
+
+GET
+/feespasses
+
+lessonplans
+Retrieve lesson plans created by national parks and other NPS entities.
+
+GET
+/lessonplans
+
+mapdata/parkboundaries
+Retrieve geometry boundaries for park specified by a site code. (e.g. abli)
+
+GET
+/mapdata/parkboundaries/{sitecode}
+
+multimedia/audio
+Retrieve metadata relating to audio files created by national parks.
+
+GET
+/multimedia/audio
+
+multimedia/galleries
+Retrieve galleries created by national parks and other NPS entities.
+
+GET
+/multimedia/galleries
+
+multimedia/galleries/assets
+Retrieve gallery assets by unique asset id, or gallery id, etc.
+
+GET
+/multimedia/galleries/assets
+
+multimedia/videos
+Retrieve metadata relating to videos created by national parks.
+
+GET
+/multimedia/videos
+
+newsreleases
+Retrieve news releases created by national parks and other NPS entities.
+
+GET
+/newsreleases
+
+parkinglots
+Retrieve information related to parking lots created by national parks and other NPS entities.
+
+GET
+/parkinglots
+
+parks
+Retrieve data about national parks (addresses, contacts, description, hours of operation, etc.).
+
+GET
+/parks
+
+passportstamplocations
+Retrieve locations (see "campgrounds", "places", and "visitorcenters") that have national park passport stamps.
+
+GET
+/passportstamplocations
+
+people
+Retrieve articles providing a synopsis of specific people related to national parks.
+
+GET
+/people
+
+places
+Retrieve articles providing a synopsis of specific places related to national parks.
+
+GET
+/places
+
+roadevents
+Retrieve information relating to road events by park and/or type of event (incident or workzone)
+
+GET
+/roadevents
+
+thingstodo
+Retrieve suggested things to do recommended by and for specific national parks.
+
+GET
+/thingstodo
+
+topics
+Retrieve categories of topics (American revolution, music, women's history, etc.) relating to national parks.
+
+GET
+/topics
+
+topics/parks
+Retrieve national parks that are related to particular categories of topics (American revolution, music, women's history, etc.).
+
+GET
+/topics/parks
+
+tours
+Retrieve tours with stops at the special places, campgrounds, and visitor centers found within national parks.
+
+GET
+/tours
+
+visitorcenters
+Retrieve data about National Park Service visitor centers including addresses, contacts, description, hours of operation, etc.
+
+GET
+/visitorcenters
+
+webcams
+Retrieve metadata about National Park Service streaming and non-streaming web cams.
+
+GET
+/webcams
