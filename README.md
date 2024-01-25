@@ -11,38 +11,39 @@ See [Google's Docs for Accessing Public Data](https://cloud.google.com/bigquery/
 
 ## What Data is Available
 * activities
-* activities__parks
+* activities/parks
 * alerts
 * amenities
-* amenities__parks
-* amenities__parkvisitorcenters
+* amenities/parksplaces
+* amenities/parksvisitorcenters
 * articles
 * campgrounds
 * events
 * feespasses
 * lessonplans
-* multimedia__galleries
-* multimedia__galleries__assets
+* multimedia/audio
+* multimedia/galleries
+* multimedia/galleries/assets
+* multimedia/videos
 * newsreleases
 * parkinglots
-* parks
 * passportstamplocations
-* people
 * places
+* roadevents
 * thingstodo
 * topics
-* topics__parks
+* topics/parks
 * tours
 * visitorcenters
 * webcams
 
 ## What Data is In Progress
-* multimedia__audio -- working on string encoding issues
+* multimedia/audio -- working on string encoding issues
 * roadevents -- this API is not yet available from NPS
 * mapdata/parkboundaries -- this api requires iterating over each park (sitecode) . 
 
 ## Data Freshness
-* Currently data is refreshed monthly
+* Currently data is refreshed *weekly*
 * We are working to update tables with frequent changes weekly and later in real-time
 
 ## Next Steps
