@@ -31,7 +31,7 @@ echo ENDPOINT=$endpoint
 table=${endpoint//\//__}
 # jq_transform
 case "$table" in
-    amenities__parksplaces | amenities__parkvisitorcenters)
+    amenities__parksplaces | amenities__parksvisitorcenters)
     jq_transform='.data[][]'
     ;;
     *)
@@ -43,7 +43,7 @@ echo Downloading $endpoint into $table...
 json="data/$table.json"
 curl -s -f -X GET "https://developer.nps.gov/api/v1/$endpoint?api_key=$API_KEY&limit=$LIMIT" -H "accept: application/json" > "$json"
 if [ $? -ne 0 ]; then
-    echo "curl error"
+    echo "error: curl"
     exit 1
 fi
 
@@ -58,33 +58,32 @@ echo "jq transform $endpoint into $jsonl"
 jq -c "$jq_transform" data/"$table".json > "$jsonl"
 
 if [ $? -ne 0 ]; then
-    echo "jq transform error"
+    echo "error: jq transform endpoint = $endpoint, table=$table"
     exit 1
 fi
 
 jsonl_size=$(wc -c <"$jsonl")
 if [ $jsonl_size -le 0 ]; then
-    echo "error: jsonl size = 0 "
+    echo "error: jsonl size = 0 endpoint = $endpoint, table=$table"
     exit 1
 fi
 
-#bq load --autodetect --source_format NEWLINE_DELIMITED_JSON  nps_public_data.$table "$jsonl"
 bq load --autodetect --source_format NEWLINE_DELIMITED_JSON  nps_public_data.$table_$STAMP  "$jsonl"
 if [ $? -ne 0 ]; then
-    echo "bq load error"
+    echo "error: bq load. endpoint = $endpoint, table=$table"
     exit 1
 fi
 echo "removing table $table"
 bq rm -f nps_public_data.$table
 if [ $? -ne 0 ]; then
-    echo "bq rm error "
+    echo "bq rm error. endpoint=$endpoint, table=$table  "
     exit 1
 fi
 # copy (move) table
 echo "copy nps_public_data.$table_$STAMP to nps_public_data.$table"
 bq cp nps_public_data.$table_$STAMP nps_public_data.$table
 if [ $? -ne 0 ]; then
-    echo "bq cp error "
+    echo "error: bq cp error table=$table"
     exit 1
 fi
 #drop stamp table
