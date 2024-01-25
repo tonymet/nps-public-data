@@ -7,7 +7,7 @@
 # bq load
 
 LIMIT=50000
-STAMP=$(date +%Y-%m-%d-%H%M)
+TS=$(date +%Y-%m-%d-%H%M)
 if [[ -z $API_KEY ]]; then
     echo "API_KEY is unset"
     exit 1
@@ -53,6 +53,9 @@ if [ $json_size -le 200 ]; then
     exit 1
 fi
 
+# collect metadata
+jq -c "del(.data) * {endpoint: \"$endpoint\", table: \"$table\", ts: \"$TS\"}" data/$table.json >> data/jsonl/meta.json
+
 jsonl="data/jsonl/$table.json"
 echo "jq transform $endpoint into $jsonl"
 jq -c "$jq_transform" data/"$table".json > "$jsonl"
@@ -68,7 +71,7 @@ if [ $jsonl_size -le 0 ]; then
     exit 1
 fi
 
-bq load --autodetect --source_format NEWLINE_DELIMITED_JSON  nps_public_data.$table_$STAMP  "$jsonl"
+bq load --autodetect --source_format NEWLINE_DELIMITED_JSON  nps_public_data.$table_$TS  "$jsonl"
 if [ $? -ne 0 ]; then
     echo "error: bq load. endpoint = $endpoint, table=$table"
     exit 1
@@ -80,16 +83,16 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 # copy (move) table
-echo "copy nps_public_data.$table_$STAMP to nps_public_data.$table"
-bq cp nps_public_data.$table_$STAMP nps_public_data.$table
+echo "copy nps_public_data.$table_$TS to nps_public_data.$table"
+bq cp nps_public_data.$table_$TS nps_public_data.$table
 if [ $? -ne 0 ]; then
     echo "error: bq cp error table=$table"
     exit 1
 fi
-#drop stamp table
-echo "removing table $table_$STAMP"
-bq rm -f nps_public_data.$table_$STAMP
+#drop TS table
+echo "removing table $table_$TS"
+bq rm -f nps_public_data.$table_$TS
 if [ $? -ne 0 ]; then
-    echo "bq rm error $table_$STAMP "
+    echo "bq rm error $table_$TS "
     exit 1
 fi
