@@ -13,9 +13,15 @@ if [[ -z $API_KEY ]]; then
     exit 1
 fi
 
+mkdir -p data/jsonl
+if [ $? -ne 0 ]; then
+    echo "mkdir error: data/jsonl"
+    exit 1
+fi
+
 if [[ -z $1 ]];then
     echo "usage: $0 TABLE"
-    exit
+    exit 1
 fi
 jq_transform='.data[]'
 
@@ -35,10 +41,10 @@ esac
 
 echo Downloading $endpoint into $table...
 json="data/$table.json"
-curl -f -X GET "https://developer.nps.gov/api/v1/$endpoint?api_key=$API_KEY&limit=$LIMIT" -H "accept: application/json" > "$json"
+curl -s -f -X GET "https://developer.nps.gov/api/v1/$endpoint?api_key=$API_KEY&limit=$LIMIT" -H "accept: application/json" > "$json"
 if [ $? -ne 0 ]; then
     echo "curl error"
-    exit
+    exit 1
 fi
 
 json_size=$(wc -c <"$json")
@@ -53,7 +59,7 @@ jq -c "$jq_transform" data/"$table".json > "$jsonl"
 
 if [ $? -ne 0 ]; then
     echo "jq transform error"
-    exit
+    exit 1
 fi
 
 jsonl_size=$(wc -c <"$jsonl")
@@ -66,25 +72,25 @@ fi
 bq load --autodetect --source_format NEWLINE_DELIMITED_JSON  nps_public_data.$table_$STAMP  "$jsonl"
 if [ $? -ne 0 ]; then
     echo "bq load error"
-    exit
+    exit 1
 fi
 echo "removing table $table"
 bq rm -f nps_public_data.$table
 if [ $? -ne 0 ]; then
     echo "bq rm error "
-    exit
+    exit 1
 fi
 # copy (move) table
 echo "copy nps_public_data.$table_$STAMP to nps_public_data.$table"
 bq cp nps_public_data.$table_$STAMP nps_public_data.$table
 if [ $? -ne 0 ]; then
     echo "bq cp error "
-    exit
+    exit 1
 fi
 #drop stamp table
 echo "removing table $table_$STAMP"
 bq rm -f nps_public_data.$table_$STAMP
 if [ $? -ne 0 ]; then
     echo "bq rm error $table_$STAMP "
-    exit
+    exit 1
 fi

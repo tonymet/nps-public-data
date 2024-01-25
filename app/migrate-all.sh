@@ -1,6 +1,6 @@
 #!/bin/bash
-for endpoint in $(cat endpoint-list.txt); do
+for endpoint in $ENDPOINTS; do
     echo "START Migrating endpoint: $endpoint"
-    echo bash migrate-table.sh $endpoint
+    bash migrate-table.sh $endpoint
     echo "END Migrating endpoint: $endpoint"
 done
