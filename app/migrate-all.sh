@@ -1,4 +1,6 @@
 #!/bin/bash
+# clear metadata collection
+rm -f data/jsonl/meta.json
 for endpoint in $ENDPOINTS; do
     echo "START Migrating endpoint: $endpoint"
     bash migrate-table.sh $endpoint
