@@ -47,14 +47,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-json_size=$(wc -c <"$json")
+json_size=$(du -sk "$json"|cut -f1)
 if [ $json_size -le 200 ]; then
     echo "error: json filesize 0"
     exit 1
 fi
 
-# collect metadata
-jq -c "del(.data) * {endpoint: \"$endpoint\", table: \"$table\", ts: \"$TS\"}" data/$table.json >> data/jsonl/meta.json
 
 jsonl="data/jsonl/$table.json"
 echo "jq transform $endpoint into $jsonl"
@@ -65,13 +63,16 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-jsonl_size=$(wc -c <"$jsonl")
+
+jsonl_size=$(du -sk "$jsonl"|cut -f1)
 if [ $jsonl_size -le 0 ]; then
     echo "error: jsonl size = 0 endpoint = $endpoint, table=$table"
     exit 1
 fi
 
-bq load --autodetect --source_format NEWLINE_DELIMITED_JSON  nps_public_data.$table_$TS  "$jsonl"
+# collect metadata
+jq -c "del(.data) * {jsonl_size: "$jsonl_size", json_size: "$json_size", endpoint: \"$endpoint\", table: \"$table\", ts: \"$TS\"}" data/$table.json >> data/jsonl/meta.json
+bq load -q --autodetect --source_format NEWLINE_DELIMITED_JSON  nps_public_data.$table_$TS  "$jsonl"
 if [ $? -ne 0 ]; then
     echo "error: bq load. endpoint = $endpoint, table=$table"
     exit 1
