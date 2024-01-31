@@ -72,7 +72,7 @@ fi
 
 # collect metadata
 jq -c "del(.data) * {jsonl_size: "$jsonl_size", json_size: "$json_size", endpoint: \"$endpoint\", table: \"$table\", ts: \"$TS\"}" data/$table.json >> data/jsonl/meta.json
-bq load -q --autodetect --source_format NEWLINE_DELIMITED_JSON  nps_public_data.$table_$TS  "$jsonl"
+bq load --headless -q --autodetect --source_format NEWLINE_DELIMITED_JSON  nps_public_data.$table_$TS  "$jsonl"
 if [ $? -ne 0 ]; then
     echo "error: bq load. endpoint = $endpoint, table=$table"
     exit 1
