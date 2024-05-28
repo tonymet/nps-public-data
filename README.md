@@ -27,6 +27,7 @@ See [Google's Docs for Accessing Public Data](https://cloud.google.com/bigquery/
 * multimedia/videos
 * newsreleases
 * parkinglots
+* parks
 * passportstamplocations
 * places
 * roadevents
