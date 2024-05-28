@@ -1,6 +1,6 @@
-FROM gcr.io/google.com/cloudsdktool/google-cloud-cli:alpine
+FROM us-west1-docker.pkg.dev/tonym-us/gcloud-lite/gcloud-lite
 
 RUN apk add --no-cache zsh jq
 ADD app/* /app/
 WORKDIR /app
-CMD /app/migrate-all.sh
+ENTRYPOINT [ "/bin/zsh", "/app/migrate-all.sh" ]

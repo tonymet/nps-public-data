@@ -1,9 +1,13 @@
-#!/bin/bash
+#!/bin/zsh
 # clear metadata collection
+if [[ -z $ENDPOINTS ]]; then
+    echo "ENDPOINTS is unset"
+    exit 1
+fi
 rm -f data/jsonl/meta.json
-for endpoint in $ENDPOINTS; do
+for endpoint in ${=ENDPOINTS}; do
     echo "START Migrating endpoint: $endpoint"
-    bash migrate-table.sh $endpoint
+    zsh migrate-table.sh $endpoint
     echo "END Migrating endpoint: $endpoint"
 done
 
