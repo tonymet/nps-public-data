@@ -15,6 +15,7 @@ multimedia/galleries/assets
 multimedia/videos
 newsreleases
 parkinglots
+parks
 passportstamplocations
 places
 roadevents
